@@ -18,6 +18,24 @@ app.get('/status', async (req, res) => {
   res.send(status)
 })
 
+app.get('/goToStaging', async (req, res) => {
+  try {
+    await git.checkout('staging')
+    res.send('Ну вроде на стейдже')
+  } catch (err) {
+    res.send(`Error: ${err}`)
+  }
+})
+
+app.get('/goToMaster', async (req, res) => {
+  try {
+    await git.checkout('master')
+    res.send('Ну вроде на мастере')
+  } catch (err) {
+    res.send(`Error: ${err}`)
+  }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
