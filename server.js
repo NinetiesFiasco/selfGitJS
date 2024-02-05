@@ -18,6 +18,20 @@ app.get('/status', async (req, res) => {
   res.send(status)
 })
 
+app.get('/fetch', async (req, res) => {
+  await git.fetch()
+  res.send('Пофетчил')
+})
+
+app.get('/pull', async (req, res) => {
+  try {
+    await git.pull()
+    res.send('Спулился')
+  } catch (err) {
+    res.send(`Error: ${err}`)
+  }
+})
+
 app.get('/goToStaging', async (req, res) => {
   try {
     await git.checkout('staging')
@@ -31,6 +45,17 @@ app.get('/goToMaster', async (req, res) => {
   try {
     await git.checkout('master')
     res.send('Ну вроде на мастере')
+  } catch (err) {
+    res.send(`Error: ${err}`)
+  }
+})
+
+app.get('/commitAll', async (req, res) => {
+  try {
+    await git.add('.')
+    await git.commit('Default simpleGit commit')
+    await git.push()
+    res.send('Чёто закомитил')
   } catch (err) {
     res.send(`Error: ${err}`)
   }
